@@ -10,6 +10,7 @@ import com.slk.model.Employee;
 public interface EmployeeDAO {
 	Employee registerAdmin(Employee employee);
 	List<Employee> getAllAdmin();
+	List<Employee> getSuperuser();
 	Employee get(Long empId);
 	Long deleteAdmin(Long empId);
 	Employee updateAdmin(Long empId,Employee emp);
