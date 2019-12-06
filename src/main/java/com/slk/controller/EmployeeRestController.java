@@ -39,7 +39,10 @@ public class EmployeeRestController {
 	public List getEmployees() {
 		return employeeDaoimpl.getAllAdmin();
 	}
-	
+	@GetMapping("/superuser")
+	public List getSuperuser() {
+		return employeeDaoimpl.getSuperuser();
+	}
 	/*@GetMapping("/employee/{id}")
 	public ResponseEntity getCustomer(@PathVariable("id") Long id) {
 		//employee = employeeDaoimpl.updateAdmin(id);

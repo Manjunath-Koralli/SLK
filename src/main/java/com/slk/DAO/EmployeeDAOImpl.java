@@ -18,6 +18,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	Connection connection = null;
 	private static List<Employee> admins;
+	private static List<Employee> superuser;
 	
 	
 	 {
@@ -66,6 +67,51 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return admins;
 	}
 	
+	@Override
+	public List<Employee> getSuperuser() {
+		// TODO Auto-generated method stub
+		
+		String query = "Select * from employee where emp_role = 'SUPER USER' ";
+		//Employee emp;
+		superuser = new ArrayList<>();
+		PreparedStatement st;
+		try {
+			
+			st = connection.prepareStatement(query);
+			
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				Employee emp = new Employee();
+				int empId = rs.getInt(1);
+				String empName = rs.getString(2);
+				String empDob = rs.getString(3);
+				long empContact = rs.getLong(4);
+				String uname = rs.getString(5);
+				String pwd = rs.getString(6);
+				String erole = rs.getString(7);
+				System.out.println(empId + " " + empName + " " + empDob + " " + empContact);
+				emp.setEmpId(empId);
+				emp.setName(empName);
+				emp.setDob(empDob);
+				emp.setContact(empContact);
+				emp.setUsername(uname);
+				emp.setPwd(pwd);
+				emp.setRole(erole);
+				//admins.add(new Employee(empId,empName,empDob,empContact));
+				superuser.add(emp);
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return superuser;
+		
+		
+	}
 	
 
 	@Override
@@ -116,14 +162,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	{
 		try {
 			
-			
-			String updSql = "UPDATE  Employee set name = ?,DOB = ?,phone_no = ? WHERE empId = ?";
+			//String role = "admin";
+			String updSql = "UPDATE  Employee set name = ?,DOB = ?,phone_no = ?,username =?,password = ?,emp_role=? WHERE empId = ?";
 			PreparedStatement pst = connection.prepareStatement(updSql);
 			
-			pst.setString(1, "Vinayak");
-			pst.setString(2, "1997-08-13");
-			pst.setLong(3, 819713939);
-			pst.setLong(4, empId);
+			pst.setString(1, emp.getName());
+			pst.setString(2, emp.getDob());
+			pst.setLong(3, emp.getContact());
+			pst.setString(4, emp.getUsername());
+			pst.setString(5, emp.getPwd());
+			pst.setString(6, emp.getRole());
+			pst.setLong(7, empId);
 			
 			int res  = pst.executeUpdate();
 			
@@ -215,6 +264,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				employee.setName(rs.getString(2));
 				employee.setDob(rs.getString(3));
 				employee.setContact(rs.getLong(4));
+				employee.setUsername(rs.getString(5));
+				employee.setPwd(rs.getString(6));
+				employee.setRole(rs.getString(7));
 				return employee;
 				
 			}
@@ -226,6 +278,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 		return null;
 	}
+
+
+
+	
 
 	
 	
