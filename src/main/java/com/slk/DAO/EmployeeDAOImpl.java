@@ -19,9 +19,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	Connection connection = null;
 	private static List<Employee> admins;
 	private static List<Employee> superuser;
+	{
+		connection = DBUtil.getConnection();
+		System.out.println(connection);
+	}
 	
 	
-	 {
+	 /*{
 		connection = DBUtil.getConnection();
 		System.out.println(connection);
 		String query = "Select * from employee where emp_role = 'admin' ";
@@ -60,10 +64,47 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 		
 		
-	}
+	}*/
 
 	@Override
 	public List<Employee> getAllAdmin() {
+		
+		
+		String query = "Select * from employee where emp_role = 'admin' ";
+		//Employee emp;
+		admins = new ArrayList<>();
+		PreparedStatement st;
+		try {
+			
+			st = connection.prepareStatement(query);
+			
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				Employee emp = new Employee();
+				int empId = rs.getInt(1);
+				String empName = rs.getString(2);
+				String empDob = rs.getString(3);
+				long empContact = rs.getLong(4);
+				String uname = rs.getString(5);
+				String pwd = rs.getString(6);
+				String erole = rs.getString(7);
+				System.out.println(empId + " " + empName + " " + empDob + " " + empContact);
+				emp.setEmpId(empId);
+				emp.setName(empName);
+				emp.setDob(empDob);
+				emp.setContact(empContact);
+				emp.setUsername(uname);
+				emp.setPwd(pwd);
+				emp.setRole(erole);
+				//admins.add(new Employee(empId,empName,empDob,empContact));
+				admins.add(emp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return admins;
 	}
 	
