@@ -232,7 +232,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public Employee updateCustomer(Long acc_no,int approve)
+	public Employee updateCustomer(Long acc_no,Employee emp)
 	{
 		try {
 			
@@ -240,7 +240,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			String updSql = "UPDATE  customer_account set approval = ? WHERE customer_Acc_no = ?";
 			PreparedStatement pst = connection.prepareStatement(updSql);
 			
-			pst.setString(1, approve);
+			pst.setString(1, );
 			pst.setString(2, acc_no);
 			
 			
