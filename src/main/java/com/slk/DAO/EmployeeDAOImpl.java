@@ -232,6 +232,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override
+	public Employee UpdateCustomer(Long acc_no,int approve)
+	{
+		try {
+			
+			//String role = "admin";
+			String updSql = "UPDATE  customer_account set approval = ? WHERE customer_Acc_no = ?";
+			PreparedStatement pst = connection.prepareStatement(updSql);
+			
+			pst.setString(1, approve);
+			pst.setString(2, acc_no);
+			
+			
+			int res  = pst.executeUpdate();
+			
+			if(res > 0)
+			{
+				System.out.println("Customer updated");
+			}
+			return emp;
+			
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public Employee updateSuperuser(Long empId, Employee emp) {
 		// TODO Auto-generated method stub
 		try {
