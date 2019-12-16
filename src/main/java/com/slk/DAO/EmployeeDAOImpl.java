@@ -232,7 +232,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public Employee UpdateCustomer(Long acc_no,int approve)
+	public Employee updateCustomer(Long acc_no,int approve)
 	{
 		try {
 			
@@ -349,7 +349,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return null;
 	}
 
-
+	
 
 	
 
