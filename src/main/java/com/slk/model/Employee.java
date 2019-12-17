@@ -8,6 +8,7 @@ public class Employee {
 	private String name;
 	private String dob;
 	private long contact;
+	private String email;
 	private String username;
 	private String pwd;
 	private String role;
@@ -53,6 +54,12 @@ public class Employee {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 

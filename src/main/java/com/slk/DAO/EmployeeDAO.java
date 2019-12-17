@@ -15,6 +15,7 @@ public interface EmployeeDAO {
 	Long deleteAdmin(Long empId);
 	Employee updateAdmin(Long empId,Employee emp);
 	Employee updateSuperuser(Long empId,Employee emp);
+	Employee updateCustomer(Long acc_no,Employee emp);
 	
 	
 	

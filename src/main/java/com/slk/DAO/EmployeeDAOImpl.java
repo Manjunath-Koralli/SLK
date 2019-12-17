@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.slk.DAO.EmployeeDAO;
 import com.slk.model.Employee;
 import com.slk.util.DBUtil;
 
@@ -25,52 +26,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	
-	 /*{
-		connection = DBUtil.getConnection();
-		System.out.println(connection);
-		String query = "Select * from employee where emp_role = 'admin' ";
-		//Employee emp;
-		admins = new ArrayList<>();
-		PreparedStatement st;
-		try {
-			
-			st = connection.prepareStatement(query);
-			
-			ResultSet rs = st.executeQuery();
-			
-			while(rs.next()) {
-				Employee emp = new Employee();
-				int empId = rs.getInt(1);
-				String empName = rs.getString(2);
-				String empDob = rs.getString(3);
-				long empContact = rs.getLong(4);
-				String uname = rs.getString(5);
-				String pwd = rs.getString(6);
-				String erole = rs.getString(7);
-				System.out.println(empId + " " + empName + " " + empDob + " " + empContact);
-				emp.setEmpId(empId);
-				emp.setName(empName);
-				emp.setDob(empDob);
-				emp.setContact(empContact);
-				emp.setUsername(uname);
-				emp.setPwd(pwd);
-				emp.setRole(erole);
-				//admins.add(new Employee(empId,empName,empDob,empContact));
-				admins.add(emp);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}*/
+	 
 
 	@Override
 	public List<Employee> getAllAdmin() {
 		
 		
-		String query = "Select * from employee where emp_role = 'admin' ";
+		String query = "Select * from employee where emp_role = 'managing director' ";
 		//Employee emp;
 		admins = new ArrayList<>();
 		PreparedStatement st;
@@ -86,9 +48,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String empName = rs.getString(2);
 				String empDob = rs.getString(3);
 				long empContact = rs.getLong(4);
-				String uname = rs.getString(5);
-				String pwd = rs.getString(6);
-				String erole = rs.getString(7);
+				
+				String email = rs.getString(5);
+				String uname = rs.getString(6);
+				String pwd = rs.getString(7);
+				String erole = rs.getString(8);
 				System.out.println(empId + " " + empName + " " + empDob + " " + empContact);
 				emp.setEmpId(empId);
 				emp.setName(empName);
@@ -112,7 +76,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Employee> getSuperuser() {
 		// TODO Auto-generated method stub
 		
-		String query = "Select * from employee where emp_role = 'SUPER USER' ";
+		String query = "Select * from employee where emp_role = 'CEO' ";
 		//Employee emp;
 		superuser = new ArrayList<>();
 		PreparedStatement st;
@@ -128,14 +92,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String empName = rs.getString(2);
 				String empDob = rs.getString(3);
 				long empContact = rs.getLong(4);
-				String uname = rs.getString(5);
-				String pwd = rs.getString(6);
-				String erole = rs.getString(7);
+				String email = rs.getString(5);
+				String uname = rs.getString(6);
+				String pwd = rs.getString(7);
+				String erole = rs.getString(8);
 				System.out.println(empId + " " + empName + " " + empDob + " " + empContact);
 				emp.setEmpId(empId);
 				emp.setName(empName);
 				emp.setDob(empDob);
 				emp.setContact(empContact);
+				emp.setEmail(email);
 				emp.setUsername(uname);
 				emp.setPwd(pwd);
 				emp.setRole(erole);
@@ -159,7 +125,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public Employee registerAdmin(Employee employee) {
 		// TODO Auto-generated method stub
 		String role = "admin";
-		String select_query = "Select max(empId) from employee";
+		String select_query = "Select max(employee_id) from employee";
 		Statement select_stmt;
 		int i=0;
 		try {
@@ -182,9 +148,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			pst.setString(2,employee.getName());
 			pst.setString(3,employee.getDob());
 			pst.setLong(4,employee.getContact());
-			pst.setString(5,employee.getUsername());
-			pst.setString(6,employee.getPwd());
-			pst.setString(7,role);
+			pst.setString(5, employee.getEmail());
+			pst.setString(6,employee.getUsername());
+			pst.setString(7,employee.getPwd());
+			pst.setString(8,role);
 			i = pst.executeUpdate();
 			System.out.println(i + " records inserted");
 			//admins.add(employee);
@@ -202,59 +169,29 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public Employee updateAdmin(Long empId,Employee emp)
 	{
 		try {
-			
-			//String role = "admin";
-			String updSql = "UPDATE  Employee set name = ?,DOB = ?,phone_no = ?,username =?,password = ?,emp_role=? WHERE empId = ?";
+			String updSql = "UPDATE  Employee set employee_name = ?,dob = ?,contact = ?,mail = ?username =?,password = ?,employee_role=? WHERE employee_id = ?";
 			PreparedStatement pst = connection.prepareStatement(updSql);
 			
 			pst.setString(1, emp.getName());
 			pst.setString(2, emp.getDob());
 			pst.setLong(3, emp.getContact());
-			pst.setString(4, emp.getUsername());
-			pst.setString(5, emp.getPwd());
-			pst.setString(6, emp.getRole());
-			pst.setLong(7, empId);
+			pst.setString(4, emp.getEmail());
+			pst.setString(5, emp.getUsername());
+			pst.setString(6, emp.getPwd());
+			pst.setString(7, emp.getRole());
+			pst.setLong(8, empId);
 			
 			int res  = pst.executeUpdate();
 			
 			if(res > 0)
 			{
-				System.out.println("Admin updated");
+				System.out.println("Superuser updated");
 			}
 			return emp;
-			
+		
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public Employee updateCustomer(Long acc_no,Employee emp)
-	{
-		try {
-			
-			//String role = "admin";
-			String updSql = "UPDATE  customer_account set approval = ? WHERE customer_Acc_no = ?";
-			PreparedStatement pst = connection.prepareStatement(updSql);
-			
-			pst.setString(1, );
-			pst.setString(2, acc_no);
-			
-			
-			int res  = pst.executeUpdate();
-			
-			if(res > 0)
-			{
-				System.out.println("Customer updated");
-			}
-			return emp;
-			
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
+		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -264,39 +201,40 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public Employee updateSuperuser(Long empId, Employee emp) {
 		// TODO Auto-generated method stub
 		try {
-			
-			
-			String updSql = "UPDATE  Employee set name = ? WHERE empId = ?";
+			String updSql = "UPDATE  Employee set employee_name = ?,dob = ?,contact = ?,mail = ?username =?,password = ?,employee_role=? WHERE employee_id = ?";
 			PreparedStatement pst = connection.prepareStatement(updSql);
 			
-			pst.setString(1, "Prajwal");
-			//pst.setString(2, "1997-08-13");
-			//pst.setLong(3, 819713939);
-			pst.setLong(2, empId);
+			pst.setString(1, emp.getName());
+			pst.setString(2, emp.getDob());
+			pst.setLong(3, emp.getContact());
+			pst.setString(4, emp.getEmail());
+			pst.setString(5, emp.getUsername());
+			pst.setString(6, emp.getPwd());
+			pst.setString(7, emp.getRole());
+			pst.setLong(8, empId);
 			
 			int res  = pst.executeUpdate();
 			
 			if(res > 0)
 			{
-				System.out.println("Super User updated");
+				System.out.println("Superuser updated");
 			}
 			return emp;
-			
+		
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
+		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 	
 	@Override
 	public Long deleteAdmin(Long empId) {
 		// TODO Auto-generated method stub
 		try{
 			
-			String sql="DELETE FROM Employee WHERE empId = ? ";			
+			String sql="DELETE FROM Employee WHERE employee_id = ? ";			
 			PreparedStatement pst = connection.prepareStatement(sql);
 			pst.setLong(1, empId);
 			
@@ -316,13 +254,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 		return null;
 	}
-
-
-
+	
+	
 	@Override
 	public Employee get(Long empId) {
 		// TODO Auto-generated method stub
-		String query = "Select * from employee where empId = ?";
+		String query = "Select * from employee where employee_id = ?";
 		
 		try {
 			PreparedStatement st = connection.prepareStatement(query);
@@ -348,6 +285,43 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 		return null;
 	}
+	
+	@Override
+	public Employee updateCustomer(Long acc_no,Employee emp)
+	{
+		try {
+			
+			//String role = "admin";
+			String updSql = "UPDATE  customer_account set approval = ? WHERE customer_Acc_no = ?";
+			PreparedStatement pst = connection.prepareStatement(updSql);
+			
+			//pst.setString(1, );
+			//pst.setString(2, acc_no);
+			
+			
+			int res  = pst.executeUpdate();
+			
+			if(res > 0)
+			{
+				System.out.println("Customer updated");
+			}
+			return emp;
+			
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	
+
+
+
+	
 
 	
 
