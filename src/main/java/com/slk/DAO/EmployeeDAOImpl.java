@@ -32,7 +32,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Employee> getAllAdmin() {
 		
 		
-		String query = "Select * from employee where emp_role = 'managing director' ";
+		String query = "Select * from employee where employee_role = 'managing director' ";
 		//Employee emp;
 		admins = new ArrayList<>();
 		PreparedStatement st;
@@ -76,7 +76,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Employee> getSuperuser() {
 		// TODO Auto-generated method stub
 		
-		String query = "Select * from employee where emp_role = 'CEO' ";
+		String query = "Select * from employee where employee_role = 'CEO' ";
 		//Employee emp;
 		superuser = new ArrayList<>();
 		PreparedStatement st;
