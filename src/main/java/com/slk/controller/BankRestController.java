@@ -26,7 +26,7 @@ public class BankRestController {
 	private BranchDAOImpl branchDaoImpl;
 	
 	@PostMapping(value = "/post/branch")
-	public ResponseEntity createBranch(@RequestBody  Branch branch) {
+	public ResponseEntity createBranch(@RequestBody Branch branch) {
 
 		branchDaoImpl.registerBranch(branch);
 
