@@ -8,10 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.slk.model.Branch;
 
 import com.slk.util.DBUtil;
 
+@Repository
 public class BranchDAOImpl implements BranchDAO {
 	
 	Connection connection = null;

@@ -8,10 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.slk.model.Branch;
+import org.springframework.stereotype.Repository;
+
+
 import com.slk.model.Loan;
 import com.slk.util.DBUtil;
 
+@Repository
 public class LoanDAOImpl implements LoanDAO{
 	
 	Connection connection = null;
