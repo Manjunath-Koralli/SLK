@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.slk.model.Branch;
-import com.slk.model.Employee;
+
 import com.slk.util.DBUtil;
 
 public class BranchDAOImpl implements BranchDAO {
